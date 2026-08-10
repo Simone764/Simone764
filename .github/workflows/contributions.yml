@@ -1,0 +1,34 @@
+name: refresh contribution graph
+
+# The portrait and the wordmark never change; the calendar does, so redraw it
+# daily from the public profile page and commit it only when it actually moved.
+on:
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Redraw assets/contributions.svg
+        run: python3 tools/build_contributions.py "${{ github.repository_owner }}"
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- assets/contributions.svg; then
+            echo "calendar unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: refresh contribution graph" -- assets/contributions.svg
+          git push

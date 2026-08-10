@@ -4,19 +4,22 @@
       <animate attributeName="width" values="0.0;7.8;15.6;23.4;31.2;39.0;46.8;54.6;62.4;70.2;78.0;85.8;93.6;101.4;109.2;117.0;124.8;132.6;140.4;148.2;156.0;163.8;171.6;179.4;187.2;195.0;202.8;210.6;218.4;226.2;234.0;241.8;249.6;257.4;265.2" keyTimes="0.0000;0.0294;0.0588;0.0882;0.1176;0.1471;0.1765;0.2059;0.2353;0.2647;0.2941;0.3235;0.3529;0.3824;0.4118;0.4412;0.4706;0.5000;0.5294;0.5588;0.5882;0.6176;0.6471;0.6765;0.7059;0.7353;0.7647;0.7941;0.8235;0.8529;0.8824;0.9118;0.9412;0.9706;1.0000" calcMode="discrete" dur="1.6s" begin="0.6s" fill="freeze"/>
     </rect></clipPath>
     <clipPath id="av"><circle cx="452.16" cy="17.0" r="12.24"/></clipPath>
+    
     <style>
+      text { font-variant-ligatures:none; }
       .win { opacity:0; animation: win .7s cubic-bezier(.2,.8,.2,1) .05s forwards; }
       @keyframes win { from { opacity:0; transform: translateY(10px) scale(.985); }
                         to   { opacity:1; transform: none; } }
+      .cur { opacity:0; animation: curin .01s 0.6s forwards,
+                                    blink 1s steps(1) 2.2s infinite; }
+      @keyframes curin { to { opacity:1; } }
+      @keyframes blink { 0%,50% { opacity:1; } 50.01%,100% { opacity:0; } }
       .l { fill:#d7dae3; font-size:7.0px; white-space:pre; opacity:0;
             animation: rev 0.5s cubic-bezier(.2,.8,.2,1) forwards; }
       @keyframes rev { from { opacity:0; transform: translateY(3px); }
                         to   { opacity:.92; transform: none; } }
-      .cur { opacity:0; animation: curin .01s 0.6s forwards, blink 1s steps(1) 2.2s infinite; }
-      @keyframes curin { to { opacity:1; } }
-      @keyframes blink { 0%,50% { opacity:1; } 50.01%,100% { opacity:0; } }
       @media (prefers-reduced-motion: reduce) {
-        .win,.l,.cur { animation: none !important; opacity:1; }
+        .win,.cur,.l,.cell,.fade { animation: none !important; opacity:1; }
       }
     </style>
   </defs>
@@ -36,55 +39,55 @@
       <animate attributeName="x" values="105.6;113.4;121.2;129.0;136.8;144.6;152.4;160.2;168.0;175.8;183.6;191.4;199.2;207.0;214.8;222.6;230.4;238.2;246.0;253.8;261.6;269.4;277.2;285.0;292.8;300.6;308.4;316.2;324.0;331.8;339.6;347.4;355.2;363.0;370.8" keyTimes="0.0000;0.0294;0.0588;0.0882;0.1176;0.1471;0.1765;0.2059;0.2353;0.2647;0.2941;0.3235;0.3529;0.3824;0.4118;0.4412;0.4706;0.5000;0.5294;0.5588;0.5882;0.6176;0.6471;0.6765;0.7059;0.7353;0.7647;0.7941;0.8235;0.8529;0.8824;0.9118;0.9412;0.9706;1.0000" calcMode="discrete" dur="1.6s" begin="0.6s" fill="freeze"/>
     </rect>
 
-    <text class="l" x="24.0" y="65.0" xml:space="preserve" style="animation-delay:2.3s">                                   =c**osccccsscc+~</text>
-    <text class="l" x="24.0" y="72.7" xml:space="preserve" style="animation-delay:2.322s">                                 *soosScscSsoCCooCCSs</text>
-    <text class="l" x="24.0" y="80.4" xml:space="preserve" style="animation-delay:2.344s">                               ;csssooss%SsSCCsC%CosSo**</text>
-    <text class="l" x="24.0" y="88.1" xml:space="preserve" style="animation-delay:2.366s">                               CCCCosssSoSScocoCoSs+SSso*;</text>
-    <text class="l" x="24.0" y="95.8" xml:space="preserve" style="animation-delay:2.388s">                              sSSoSocSoossoSocSo*s##%ssoSCo</text>
-    <text class="l" x="24.0" y="103.5" xml:space="preserve" style="animation-delay:2.41s">                              oC%CoCssoSSocsSCsso%CoSscSoCS=</text>
-    <text class="l" x="24.0" y="111.2" xml:space="preserve" style="animation-delay:2.432s">                              o#CSS%#%%SSCCSsSSSCoccS%ooooS+</text>
-    <text class="l" x="24.0" y="118.9" xml:space="preserve" style="animation-delay:2.454s">                              cSoCC%%cS%C%%##%#CSCSCS%%%@%;</text>
-    <text class="l" x="24.0" y="126.6" xml:space="preserve" style="animation-delay:2.476s">                              =ossc*~`.:soSSoC%%#@@#%C@@s</text>
-    <text class="l" x="24.0" y="134.3" xml:space="preserve" style="animation-delay:2.498s">                            ,~-~+sc,   `,-=~ ,;*cs**so;</text>
-    <text class="l" x="24.0" y="142.0" xml:space="preserve" style="animation-delay:2.52s">                            ,,~, .:cc=,~=+**c*~,~:;coS</text>
-    <text class="l" x="24.0" y="149.7" xml:space="preserve" style="animation-delay:2.542s">                            . `,.`  -+oC*sSosssc*s%%ocs</text>
-    <text class="l" x="24.0" y="157.4" xml:space="preserve" style="animation-delay:2.564s">                              `..`.   ;o`+s=-,sSC%ss;` s</text>
-    <text class="l" x="24.0" y="165.1" xml:space="preserve" style="animation-delay:2.586s">                                ....` .*~-,,,+; +o--~,=</text>
-    <text class="l" x="24.0" y="172.8" xml:space="preserve" style="animation-delay:2.608s">                                ,,.....-:::;;~  ,;+c:</text>
-    <text class="l" x="24.0" y="180.5" xml:space="preserve" style="animation-delay:2.63s">                              ;..~~-,,,,,,,. .~;=~:~</text>
-    <text class="l" x="24.0" y="188.2" xml:space="preserve" style="animation-delay:2.652s">                   ;==+*so#%%;  .-:;:~-,,--~::;+===</text>
-    <text class="l" x="24.0" y="195.9" xml:space="preserve" style="animation-delay:2.674s">               +sS#####@#%%%Co. .,~=++=~,,,,~:;;+%@@#S=</text>
-    <text class="l" x="24.0" y="203.6" xml:space="preserve" style="animation-delay:2.696s">            *SC%%%%#%####%%#%#s-.,~:=*cs*;:::;+S@@@@@@@%;</text>
-    <text class="l" x="24.0" y="211.3" xml:space="preserve" style="animation-delay:2.718s">           sCSCC%%%#######%%#%%C+~-~:+*ccs#@#@@@@@@@@@@@@S</text>
-    <text class="l" x="24.0" y="219.0" xml:space="preserve" style="animation-delay:2.74s">        ccsSSCC%%%#%#@@####%##%%#Cs+++*sS#@@@@@@@@@@@@@@#@@*</text>
-    <text class="l" x="24.0" y="226.7" xml:space="preserve" style="animation-delay:2.762s">      +@@SSSCCC%%##@%@@@########%######@@@@@@@@@@@@@@@@@###@S</text>
-    <text class="l" x="24.0" y="234.4" xml:space="preserve" style="animation-delay:2.784s">      c@SoCCC%C%@##@##@@@############@@@##@@@@@@@@@@@#@@#@@#@@</text>
-    <text class="l" x="24.0" y="242.1" xml:space="preserve" style="animation-delay:2.806s">      *#oSCC%%#%#@@@@#@@@@##@#############@@#@#@##@@@#@@@@###@@+</text>
-    <text class="l" x="24.0" y="249.8" xml:space="preserve" style="animation-delay:2.828s">      =CSSSC%%####@@@#@@@@##########%%%#@@@##@#@##@@@#@@@#@@###@c</text>
-    <text class="l" x="24.0" y="257.5" xml:space="preserve" style="animation-delay:2.85s">      =CSCCCC%##@@@@@##@@@##########%##@@@@#@#@#C@@@##@@@@@@####@%</text>
-    <text class="l" x="24.0" y="265.2" xml:space="preserve" style="animation-delay:2.872s">      sCSC%%%%###@@@@##@@@@########%%#@@@@###@S+*s#@#@@@@@######@@%:</text>
-    <text class="l" x="24.0" y="272.9" xml:space="preserve" style="animation-delay:2.894s">     +CSCCCC%%####@@@@##@@@##########@@@@###@C=cCs*#@#@@@@@@@@@#S+:;:</text>
-    <text class="l" x="24.0" y="280.6" xml:space="preserve" style="animation-delay:2.916s">     SSCC%#######@@@@@@#@@@@########@@@@####@S*soS*%@+ S@@@@%o*:--~~:;</text>
-    <text class="l" x="24.0" y="288.3" xml:space="preserve" style="animation-delay:2.938s">     ,`.-:=*sS%@@@@@@@@@#@@@@######@@@@@####@ScCs*C@@~  .,-;+;~~~~`:*+******</text>
-    <text class="l" x="24.0" y="296.0" xml:space="preserve" style="animation-delay:2.96s">          `.-~=co#@@@@@@@#@@@@@@@@##@@@###@@@#CC%#@@#`      ,;=;:,-c**************</text>
-    <text class="l" x="24.0" y="303.7" xml:space="preserve" style="animation-delay:2.982s">        `.,-~:;=+%@@@@@@@@#@@@@@@@@@@@##@@@@@@@@@@#@c   ````  ,;=,***********************</text>
-    <text class="l" x="24.0" y="311.4" xml:space="preserve" style="animation-delay:3.004s">        `.-~:;=+o%%@@@@@@@@@@@@@@@@@@@@@@@@@@@###@@@- ``````````.;c***************************</text>
-    <text class="l" x="24.0" y="319.1" xml:space="preserve" style="animation-delay:3.026s">       `.,~:;=+s%C%#@@@@@@@@@@@@@@@@@@@@@@@@@###@@@o ````````..`,c*****************c*********    ****</text>
-    <text class="l" x="24.0" y="326.8" xml:space="preserve" style="animation-delay:3.048s">        .,-~~:;*soC%#@@@@@@@@@###@@@@@@@@#####@@@@@- `    ``````=c************cccccccccccccccccccc *c*</text>
-    <text class="l" x="24.0" y="334.5" xml:space="preserve" style="animation-delay:3.07s">               `..,~:=coC#@@@@@@@@@@@@@@@@@@@@@@@@@o ,+;:~~~~-,-c********ccccccccccccsscccccccccccccc*</text>
-    <text class="l" x="24.0" y="342.2" xml:space="preserve" style="animation-delay:3.092s">                       `.,~:=*soSC%##@@@@@@##%CSSSoo~,o%Cs+==*:=  ******c ccccccccoSSSccccccccccccccc</text>
-    <text class="l" x="24.0" y="349.9" xml:space="preserve" style="animation-delay:3.114s">                               ``..,--~~~~-,,..`````,-,-~:;==;~     ***cc cc   ccsSSSSc         cccs</text>
-    <text class="l" x="24.0" y="357.6" xml:space="preserve" style="animation-delay:3.136s">  ;. ``..````````                   ``        ```.,--,,,,,-~:-         ccc       sosoc         cccc</text>
-    <text class="l" x="24.0" y="365.3" xml:space="preserve" style="animation-delay:3.158s">oSCc~~~~--,,,,,...........`````     `          ``....,,,,,-,,:                      c      s</text>
-    <text class="l" x="24.0" y="373.0" xml:space="preserve" style="animation-delay:3.18s"> SoSSsc*+=;;;;;;:::::::::::::::::::-,`          .-~:~-.`.-~:-                            s   sss</text>
-    <text class="l" x="24.0" y="380.7" xml:space="preserve" style="animation-delay:3.202s">         ;;;=======++**ccccsooSSCo+++=~..```````   .~+c*;,.,;                          ssssssssss</text>
-    <text class="l" x="24.0" y="388.4" xml:space="preserve" style="animation-delay:3.224s">                   ;=======+++++++:~---~~~:;=+*cs*;-.`,;cSc-                           sssssssooo</text>
-    <text class="l" x="24.0" y="396.1" xml:space="preserve" style="animation-delay:3.246s">                       ;;;===;;;;  ;;:-,,-~::+*cs%##Sc:,.~*;                               SSCCS</text>
-    <text class="l" x="24.0" y="403.8" xml:space="preserve" style="animation-delay:3.268s">                      ;; ;          :;==;~--~==*sC%%%%Co*=-                              %%%CCS</text>
-    <text class="l" x="24.0" y="411.5" xml:space="preserve" style="animation-delay:3.29s">                       ==             ::;=;:~-~:=csoSoooCc;                       %%%%CC</text>
-    <text class="l" x="24.0" y="419.2" xml:space="preserve" style="animation-delay:3.312s">                                            ==;:--:;+sooS;                  %%%%%CCSoo</text>
-    <text class="l" x="24.0" y="426.9" xml:space="preserve" style="animation-delay:3.334s">                                               +=;~-~~;=:=            %%%%%CCSo</text>
-    <text class="l" x="24.0" y="434.6" xml:space="preserve" style="animation-delay:3.356s">                                                    *:--~      %%%%%%CCSooo s</text>
-    <text class="l" x="24.0" y="442.3" xml:space="preserve" style="animation-delay:3.378s">                                                      +*cs    CCSoos</text>
+    <text class="l" x="24.0" y="65.0" xml:space="preserve" textLength="214.2" lengthAdjust="spacing" style="animation-delay:2.3s">                                   =c**osccccsscc+~</text>
+    <text class="l" x="24.0" y="72.7" xml:space="preserve" textLength="222.6" lengthAdjust="spacing" style="animation-delay:2.322s">                                 *soosScscSsoCCooCCSs</text>
+    <text class="l" x="24.0" y="80.4" xml:space="preserve" textLength="235.2" lengthAdjust="spacing" style="animation-delay:2.344s">                               ;csssooss%SsSCCsC%CosSo**</text>
+    <text class="l" x="24.0" y="88.1" xml:space="preserve" textLength="243.6" lengthAdjust="spacing" style="animation-delay:2.366s">                               CCCCosssSoSScocoCoSs+SSso*;</text>
+    <text class="l" x="24.0" y="95.8" xml:space="preserve" textLength="247.8" lengthAdjust="spacing" style="animation-delay:2.388s">                              sSSoSocSoossoSocSo*s##%ssoSCo</text>
+    <text class="l" x="24.0" y="103.5" xml:space="preserve" textLength="252.0" lengthAdjust="spacing" style="animation-delay:2.41s">                              oC%CoCssoSSocsSCsso%CoSscSoCS=</text>
+    <text class="l" x="24.0" y="111.2" xml:space="preserve" textLength="252.0" lengthAdjust="spacing" style="animation-delay:2.432s">                              o#CSS%#%%SSCCSsSSSCoccS%ooooS+</text>
+    <text class="l" x="24.0" y="118.9" xml:space="preserve" textLength="247.8" lengthAdjust="spacing" style="animation-delay:2.454s">                              cSoCC%%cS%C%%##%#CSCSCS%%%@%;</text>
+    <text class="l" x="24.0" y="126.6" xml:space="preserve" textLength="239.4" lengthAdjust="spacing" style="animation-delay:2.476s">                              =ossc*~`.:soSSoC%%#@@#%C@@s</text>
+    <text class="l" x="24.0" y="134.3" xml:space="preserve" textLength="231.0" lengthAdjust="spacing" style="animation-delay:2.498s">                            ,~-~+sc,   `,-=~ ,;*cs**so;</text>
+    <text class="l" x="24.0" y="142.0" xml:space="preserve" textLength="226.8" lengthAdjust="spacing" style="animation-delay:2.52s">                            ,,~, .:cc=,~=+**c*~,~:;coS</text>
+    <text class="l" x="24.0" y="149.7" xml:space="preserve" textLength="231.0" lengthAdjust="spacing" style="animation-delay:2.542s">                            . `,.`  -+oC*sSosssc*s%%ocs</text>
+    <text class="l" x="24.0" y="157.4" xml:space="preserve" textLength="235.2" lengthAdjust="spacing" style="animation-delay:2.564s">                              `..`.   ;o`+s=-,sSC%ss;` s</text>
+    <text class="l" x="24.0" y="165.1" xml:space="preserve" textLength="231.0" lengthAdjust="spacing" style="animation-delay:2.586s">                                ....` .*~-,,,+; +o--~,=</text>
+    <text class="l" x="24.0" y="172.8" xml:space="preserve" textLength="222.6" lengthAdjust="spacing" style="animation-delay:2.608s">                                ,,.....-:::;;~  ,;+c:</text>
+    <text class="l" x="24.0" y="180.5" xml:space="preserve" textLength="218.4" lengthAdjust="spacing" style="animation-delay:2.63s">                              ;..~~-,,,,,,,. .~;=~:~</text>
+    <text class="l" x="24.0" y="188.2" xml:space="preserve" textLength="214.2" lengthAdjust="spacing" style="animation-delay:2.652s">                   ;==+*so#%%;  .-:;:~-,,--~::;+===</text>
+    <text class="l" x="24.0" y="195.9" xml:space="preserve" textLength="231.0" lengthAdjust="spacing" style="animation-delay:2.674s">               +sS#####@#%%%Co. .,~=++=~,,,,~:;;+%@@#S=</text>
+    <text class="l" x="24.0" y="203.6" xml:space="preserve" textLength="239.4" lengthAdjust="spacing" style="animation-delay:2.696s">            *SC%%%%#%####%%#%#s-.,~:=*cs*;:::;+S@@@@@@@%;</text>
+    <text class="l" x="24.0" y="211.3" xml:space="preserve" textLength="243.6" lengthAdjust="spacing" style="animation-delay:2.718s">           sCSCC%%%#######%%#%%C+~-~:+*ccs#@#@@@@@@@@@@@@S</text>
+    <text class="l" x="24.0" y="219.0" xml:space="preserve" textLength="252.0" lengthAdjust="spacing" style="animation-delay:2.74s">        ccsSSCC%%%#%#@@####%##%%#Cs+++*sS#@@@@@@@@@@@@@@#@@*</text>
+    <text class="l" x="24.0" y="226.7" xml:space="preserve" textLength="256.2" lengthAdjust="spacing" style="animation-delay:2.762s">      +@@SSSCCC%%##@%@@@########%######@@@@@@@@@@@@@@@@@###@S</text>
+    <text class="l" x="24.0" y="234.4" xml:space="preserve" textLength="260.4" lengthAdjust="spacing" style="animation-delay:2.784s">      c@SoCCC%C%@##@##@@@############@@@##@@@@@@@@@@@#@@#@@#@@</text>
+    <text class="l" x="24.0" y="242.1" xml:space="preserve" textLength="268.8" lengthAdjust="spacing" style="animation-delay:2.806s">      *#oSCC%%#%#@@@@#@@@@##@#############@@#@#@##@@@#@@@@###@@+</text>
+    <text class="l" x="24.0" y="249.8" xml:space="preserve" textLength="273.0" lengthAdjust="spacing" style="animation-delay:2.828s">      =CSSSC%%####@@@#@@@@##########%%%#@@@##@#@##@@@#@@@#@@###@c</text>
+    <text class="l" x="24.0" y="257.5" xml:space="preserve" textLength="277.2" lengthAdjust="spacing" style="animation-delay:2.85s">      =CSCCCC%##@@@@@##@@@##########%##@@@@#@#@#C@@@##@@@@@@####@%</text>
+    <text class="l" x="24.0" y="265.2" xml:space="preserve" textLength="285.6" lengthAdjust="spacing" style="animation-delay:2.872s">      sCSC%%%%###@@@@##@@@@########%%#@@@@###@S+*s#@#@@@@@######@@%:</text>
+    <text class="l" x="24.0" y="272.9" xml:space="preserve" textLength="289.8" lengthAdjust="spacing" style="animation-delay:2.894s">     +CSCCCC%%####@@@@##@@@##########@@@@###@C=cCs*#@#@@@@@@@@@#S+:;:</text>
+    <text class="l" x="24.0" y="280.6" xml:space="preserve" textLength="294.0" lengthAdjust="spacing" style="animation-delay:2.916s">     SSCC%#######@@@@@@#@@@@########@@@@####@S*soS*%@+ S@@@@%o*:--~~:;</text>
+    <text class="l" x="24.0" y="288.3" xml:space="preserve" textLength="319.2" lengthAdjust="spacing" style="animation-delay:2.938s">     ,`.-:=*sS%@@@@@@@@@#@@@@######@@@@@####@ScCs*C@@~  .,-;+;~~~~`:*+******</text>
+    <text class="l" x="24.0" y="296.0" xml:space="preserve" textLength="344.4" lengthAdjust="spacing" style="animation-delay:2.96s">          `.-~=co#@@@@@@@#@@@@@@@@##@@@###@@@#CC%#@@#`      ,;=;:,-c**************</text>
+    <text class="l" x="24.0" y="303.7" xml:space="preserve" textLength="373.8" lengthAdjust="spacing" style="animation-delay:2.982s">        `.,-~:;=+%@@@@@@@@#@@@@@@@@@@@##@@@@@@@@@@#@c   ````  ,;=,***********************</text>
+    <text class="l" x="24.0" y="311.4" xml:space="preserve" textLength="394.8" lengthAdjust="spacing" style="animation-delay:3.004s">        `.-~:;=+o%%@@@@@@@@@@@@@@@@@@@@@@@@@@@###@@@- ``````````.;c***************************</text>
+    <text class="l" x="24.0" y="319.1" xml:space="preserve" textLength="424.2" lengthAdjust="spacing" style="animation-delay:3.026s">       `.,~:;=+s%C%#@@@@@@@@@@@@@@@@@@@@@@@@@###@@@o ````````..`,c*****************c*********    ****</text>
+    <text class="l" x="24.0" y="326.8" xml:space="preserve" textLength="428.4" lengthAdjust="spacing" style="animation-delay:3.048s">        .,-~~:;*soC%#@@@@@@@@@###@@@@@@@@#####@@@@@- `    ``````=c************cccccccccccccccccccc *c*</text>
+    <text class="l" x="24.0" y="334.5" xml:space="preserve" textLength="428.4" lengthAdjust="spacing" style="animation-delay:3.07s">               `..,~:=coC#@@@@@@@@@@@@@@@@@@@@@@@@@o ,+;:~~~~-,-c********ccccccccccccsscccccccccccccc*</text>
+    <text class="l" x="24.0" y="342.2" xml:space="preserve" textLength="424.2" lengthAdjust="spacing" style="animation-delay:3.092s">                       `.,~:=*soSC%##@@@@@@##%CSSSoo~,o%Cs+==*:=  ******c ccccccccoSSSccccccccccccccc</text>
+    <text class="l" x="24.0" y="349.9" xml:space="preserve" textLength="420.0" lengthAdjust="spacing" style="animation-delay:3.114s">                               ``..,--~~~~-,,..`````,-,-~:;==;~     ***cc cc   ccsSSSSc         cccs</text>
+    <text class="l" x="24.0" y="357.6" xml:space="preserve" textLength="415.8" lengthAdjust="spacing" style="animation-delay:3.136s">  ;. ``..````````                   ``        ```.,--,,,,,-~:-         ccc       sosoc         cccc</text>
+    <text class="l" x="24.0" y="365.3" xml:space="preserve" textLength="386.4" lengthAdjust="spacing" style="animation-delay:3.158s">oSCc~~~~--,,,,,...........`````     `          ``....,,,,,-,,:                      c      s</text>
+    <text class="l" x="24.0" y="373.0" xml:space="preserve" textLength="403.2" lengthAdjust="spacing" style="animation-delay:3.18s"> SoSSsc*+=;;;;;;:::::::::::::::::::-,`          .-~:~-.`.-~:-                            s   sss</text>
+    <text class="l" x="24.0" y="380.7" xml:space="preserve" textLength="407.4" lengthAdjust="spacing" style="animation-delay:3.202s">         ;;;=======++**ccccsooSSCo+++=~..```````   .~+c*;,.,;                          ssssssssss</text>
+    <text class="l" x="24.0" y="388.4" xml:space="preserve" textLength="407.4" lengthAdjust="spacing" style="animation-delay:3.224s">                   ;=======+++++++:~---~~~:;=+*cs*;-.`,;cSc-                           sssssssooo</text>
+    <text class="l" x="24.0" y="396.1" xml:space="preserve" textLength="403.2" lengthAdjust="spacing" style="animation-delay:3.246s">                       ;;;===;;;;  ;;:-,,-~::+*cs%##Sc:,.~*;                               SSCCS</text>
+    <text class="l" x="24.0" y="403.8" xml:space="preserve" textLength="399.0" lengthAdjust="spacing" style="animation-delay:3.268s">                      ;; ;          :;==;~--~==*sC%%%%Co*=-                              %%%CCS</text>
+    <text class="l" x="24.0" y="411.5" xml:space="preserve" textLength="369.6" lengthAdjust="spacing" style="animation-delay:3.29s">                       ==             ::;=;:~-~:=csoSoooCc;                       %%%%CC</text>
+    <text class="l" x="24.0" y="419.2" xml:space="preserve" textLength="361.2" lengthAdjust="spacing" style="animation-delay:3.312s">                                            ==;:--:;+sooS;                  %%%%%CCSoo</text>
+    <text class="l" x="24.0" y="426.9" xml:space="preserve" textLength="331.8" lengthAdjust="spacing" style="animation-delay:3.334s">                                               +=;~-~~;=:=            %%%%%CCSo</text>
+    <text class="l" x="24.0" y="434.6" xml:space="preserve" textLength="323.4" lengthAdjust="spacing" style="animation-delay:3.356s">                                                    *:--~      %%%%%%CCSooo s</text>
+    <text class="l" x="24.0" y="442.3" xml:space="preserve" textLength="285.6" lengthAdjust="spacing" style="animation-delay:3.378s">                                                      +*cs    CCSoos</text>
   </g>
 </svg>

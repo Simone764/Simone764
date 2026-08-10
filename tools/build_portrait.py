@@ -11,17 +11,16 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import base64
-import mimetypes
 from pathlib import Path
 
-from PIL import Image, ImageEnhance, ImageOps
+from PIL import Image, ImageOps
+
+import termsvg
 
 # density ramp, light -> dense (rendered light-on-dark)
 RAMP = " `.,-~:;=+*csoSC%#@"
 
 CHAR_ASPECT = 0.5   # source pixel rows kept per column, monospace cell is ~2:1
-ADVANCE = 0.60      # monospace advance width, in em
 
 
 def background_mask(img: Image.Image, cols: int, rows: int, tol: float,
@@ -151,117 +150,41 @@ def image_to_ascii(path: Path, cols: int, contrast: float, gamma: float,
     return [l[indent:] for l in out]
 
 
-def xml_escape(s: str) -> str:
-    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-
-
-def data_uri(path: Path) -> str:
-    mime = mimetypes.guess_type(path.name)[0] or "image/png"
-    return f"data:{mime};base64,{base64.b64encode(path.read_bytes()).decode()}"
-
-
 def build_svg(art: list[str], title: str, avatar: Path | None, *,
               font_size: float, pad: float, bar_h: float, line_gap: float,
               bg: str, bar: str, fg: str, title_fg: str,
               type_start: float, type_dur: float,
               art_start: float, art_stagger: float, art_dur: float) -> str:
-    adv = font_size * ADVANCE
+    adv = font_size * termsvg.ADVANCE
     line_h = font_size * line_gap
     cols = max((len(l) for l in art), default=0)
 
     art_w = cols * adv
-    title_fs = 13.0
-    title_adv = title_fs * ADVANCE
+    w = max(art_w + pad * 2, len(title) * termsvg.TITLE_FS * termsvg.ADVANCE + 160)
+    h = bar_h + pad + len(art) * line_h + pad
 
-    w = round(max(art_w + pad * 2, len(title) * title_adv + 160), 1)
-    h = round(bar_h + pad + len(art) * line_h + pad, 1)
-
-    # --- typing animation on the title bar (discrete steps, SMIL) ---
-    n = len(title)
-    tw = n * title_adv
-    tx = round((w - tw) / 2, 2)
-    ty = round(bar_h / 2 + title_fs * 0.36, 2)
-
-    steps = [round(i * title_adv, 2) for i in range(n + 1)]
-    key_times = ";".join(f"{i / n:.4f}" for i in range(n + 1))
-    values = ";".join(str(s) for s in steps)
-    cursor_x = ";".join(str(round(tx + s, 2)) for s in steps)
-    type_end = type_start + type_dur
-
-    art_y0 = bar_h + pad + font_size
     art_x = round((w - art_w) / 2, 2)
+    art_y0 = bar_h + pad + font_size
 
-    lines = []
-    for i, raw in enumerate(art):
-        if not raw.strip():
-            continue
-        y = round(art_y0 + i * line_h, 2)
-        delay = round(art_start + i * art_stagger, 3)
-        lines.append(
-            f'<text class="l" x="{art_x}" y="{y}" xml:space="preserve" '
-            f'style="animation-delay:{delay}s">'
-            f"{xml_escape(raw)}</text>"
-        )
-    art_block = "\n    ".join(lines)
+    body = "\n".join(
+        f'    <text class="l" x="{art_x}" y="{round(art_y0 + i * line_h, 2)}" '
+        f'xml:space="preserve" textLength="{round(len(raw) * adv, 2)}" '
+        f'lengthAdjust="spacing" '
+        f'style="animation-delay:{round(art_start + i * art_stagger, 3)}s">'
+        f'{termsvg.escape(raw)}</text>'
+        for i, raw in enumerate(art) if raw.strip()
+    )
 
-    avatar_block = ""
-    if avatar:
-        a = bar_h * 0.72
-        u = data_uri(avatar)
-        ax = round(w - a - 12, 2)
-        ay = round((bar_h - a) / 2, 2)
-        avatar_block = (
-            f'<clipPath id="av"><circle cx="{round(ax + a / 2, 2)}" '
-            f'cy="{round(ay + a / 2, 2)}" r="{round(a / 2, 2)}"/></clipPath>'
-        ), (
-            f'<image href="{u}" xlink:href="{u}" x="{ax}" y="{ay}" width="{a}" '
-            f'height="{a}" preserveAspectRatio="xMidYMid slice" clip-path="url(#av)"/>'
-        )
-
-    av_def, av_use = avatar_block if avatar_block else ("", "")
-
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{w}" height="{h}" viewBox="0 0 {w} {h}" font-family="ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,DejaVu Sans Mono,monospace">
-  <defs>
-    <clipPath id="type"><rect x="{tx}" y="0" width="0" height="{bar_h}">
-      <animate attributeName="width" values="{values}" keyTimes="{key_times}" calcMode="discrete" dur="{type_dur}s" begin="{type_start}s" fill="freeze"/>
-    </rect></clipPath>
-    {av_def}
-    <style>
-      .win {{ opacity:0; animation: win .7s cubic-bezier(.2,.8,.2,1) .05s forwards; }}
-      @keyframes win {{ from {{ opacity:0; transform: translateY(10px) scale(.985); }}
-                        to   {{ opacity:1; transform: none; }} }}
-      .l {{ fill:{fg}; font-size:{font_size}px; white-space:pre; opacity:0;
+    css = f"""      .l {{ fill:{fg}; font-size:{font_size}px; white-space:pre; opacity:0;
             animation: rev {art_dur}s cubic-bezier(.2,.8,.2,1) forwards; }}
       @keyframes rev {{ from {{ opacity:0; transform: translateY(3px); }}
-                        to   {{ opacity:.92; transform: none; }} }}
-      .cur {{ opacity:0; animation: curin .01s {type_start}s forwards, blink 1s steps(1) {type_end}s infinite; }}
-      @keyframes curin {{ to {{ opacity:1; }} }}
-      @keyframes blink {{ 0%,50% {{ opacity:1; }} 50.01%,100% {{ opacity:0; }} }}
-      @media (prefers-reduced-motion: reduce) {{
-        .win,.l,.cur {{ animation: none !important; opacity:1; }}
-      }}
-    </style>
-  </defs>
+                        to   {{ opacity:.92; transform: none; }} }}"""
 
-  <g class="win">
-    <rect x="0" y="0" width="{w}" height="{h}" rx="10" fill="{bg}"/>
-    <path d="M0 10a10 10 0 0 1 10-10h{w - 20}a10 10 0 0 1 10 10v{bar_h - 10}H0z" fill="{bar}"/>
-    <line x1="0" y1="{bar_h}" x2="{w}" y2="{bar_h}" stroke="#000" stroke-opacity=".35"/>
-    <circle cx="20" cy="{bar_h / 2}" r="6" fill="#ff5f57"/>
-    <circle cx="40" cy="{bar_h / 2}" r="6" fill="#febc2e"/>
-    <circle cx="60" cy="{bar_h / 2}" r="6" fill="#28c840"/>
-    {av_use}
-    <g clip-path="url(#type)">
-      <text x="{tx}" y="{ty}" fill="{title_fg}" font-size="{title_fs}px" xml:space="preserve">{xml_escape(title)}</text>
-    </g>
-    <rect class="cur" x="{tx}" y="{round(bar_h / 2 - title_fs * 0.42, 2)}" width="{round(title_adv, 2)}" height="{round(title_fs, 2)}" fill="{title_fg}" fill-opacity=".8">
-      <animate attributeName="x" values="{cursor_x}" keyTimes="{key_times}" calcMode="discrete" dur="{type_dur}s" begin="{type_start}s" fill="freeze"/>
-    </rect>
+    return termsvg.terminal(width=w, height=h, title=title, body=body, css=css,
+                            avatar=avatar, bar_h=bar_h, bg=bg, bar=bar,
+                            title_fg=title_fg, type_start=type_start,
+                            type_dur=type_dur)
 
-    {art_block}
-  </g>
-</svg>
-'''
 
 
 def main() -> None:
