@@ -1,11 +1,9 @@
-   +SSSSSSSSS+`          +SSSS        +SSSSSS`      +SSSSSS            `+SSSSSSSSS+`           `SSSS+       `SSS+        `SSSSSSSSSSSSSSS+
- `SSSSSSSSSSSSS+         +SSSS        +SSSSSSS      SSSSSSS          `SSSSSSSSSSSSSSS`         `SSSSS+      +SSS+        `SSSSSSSSSSSSSSS+
- SSSS`     `SSSS+        +SSSS        +SSSSSSS`    +SSSSSSS         +SSSS+`     `+SSSS+        `SSSSSSS     +SSS+        `SSSS`
- SSSS+`     `````        +SSSS        +SSS+SSSS   `SSS+SSSS        +SSSS`         +SSSS`       `SSSSSSSS`   +SSS+        `SSSS
- `SSSSSSSS++``           +SSSS        +SSS+`SSS`  +SSS`SSSS        SSSSS           SSSS+       `SSSS+SSSS`  +SSS+        `SSSSS++++++++++
-   ++SSSSSSSSSS+         +SSSS        +SSS+ SSSS `SSS+ SSSS        SSSS+           SSSSS       `SSSS `SSSS+ +SSS+        `SSSSSSSSSSSSSSS
-       ``++SSSSSS        +SSSS        +SSS+ +SSS`+SSS  SSSS        SSSSS           SSSS+       `SSSS  `SSSS++SSS+        `SSSS```````````
-+SSS+        SSSS+       +SSSS        +SSS+  SSSSSSS+  SSSS        +SSSS`         +SSSS`       `SSSS    SSSSSSSS+        `SSSS
-+SSSS+`    `+SSSS`       +SSSS        +SSS+  +SSSSSS   SSSS         +SSSS+`     `SSSSS+        `SSSS     +SSSSSS+        `SSSS`
- +SSSSSSSSSSSSSS`        +SSSS        +SSS+   SSSSS+   SSSS          `SSSSSSSSSSSSSSS`         `SSSS      +SSSSS+        `SSSSSSSSSSSSSSSS
-   ++SSSSSSSS++          +SSSS        +SSS+   +SSSS    SSSS            `+SSSSSSSSS+`           `SSS+       `SSSS+        `SSSSSSSSSSSSSSSS
+  +SSSSSSSS+        `SSS`      +SSSS+     +SSSSS         `+SSSSSSSS+         `SSS+      SSS`      `SSSSSSSSSSSS+
+ SSSS++++SSSS`      `SSS`      SSSSSS`    SSSSSS        +SSSS++++SSSS+       `SSSS+     SSS+      `SSSSSSSSSSSS+
+`SSS`     +SS+      `SSS`      SSSSSSS   +SSSSSS       SSSS`      +SSS+      `SSSSSS`   SSS+      `SSS`
+ +SSSSS++``         `SSS`      SSS++SS`  SSS+SSS      +SSS`        +SSS      `SSS+SSS`  SSS+      `SSS+++++++++
+  `+SSSSSSSS+       `SSS`      SSS+`SSS +SS+`SSS      +SSS         +SSS`     `SSS +SSS+ SSS+      `SSSSSSSSSSSS
+      ``++SSSS      `SSS`      SSS+ SSS+SSS `SSS      +SSS`        +SSS      `SSS  `SSS+SSS+      `SSS+
+SSSS      +SSS      `SSS`      SSS+ `SSSSS+ `SSS       SSSS`      +SSS+      `SSS   `SSSSSS+      `SSS`
+`SSSSS+++SSSS+      `SSS`      SSS+  SSSSS  `SSS        +SSSS++++SSSS+       `SSS     +SSSS+      `SSSSSSSSSSSSS
+  +SSSSSSSS+`       `SSS`      +SS+  `SSS+  `SSS         `+SSSSSSSS+         `SSS      +SSS`      `SSSSSSSSSSSSS
