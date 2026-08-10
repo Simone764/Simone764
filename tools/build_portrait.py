@@ -11,6 +11,8 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import base64
+import io
 from pathlib import Path
 
 from PIL import Image, ImageOps
@@ -150,7 +152,26 @@ def image_to_ascii(path: Path, cols: int, contrast: float, gamma: float,
     return [l[indent:] for l in out]
 
 
-def build_svg(art: list[str], title: str, avatar: Path | None, *,
+def avatar_uri(path: Path, crop: str | None, px: int) -> str:
+    """Shrink (and optionally crop) the photo for the title-bar badge.
+
+    Embedding the full-resolution file as base64 would push the SVG past 3 MB,
+    and the badge renders under 30px wide anyway.
+    """
+    img = Image.open(path).convert("RGB")
+    if crop:
+        box = tuple(int(v) for v in crop.split(","))
+        if len(box) != 4:
+            raise SystemExit("--avatar-crop wants left,top,right,bottom")
+        img = img.crop(box)
+    img = img.resize((px, px), Image.LANCZOS)
+
+    buf = io.BytesIO()
+    img.save(buf, "PNG", optimize=True)
+    return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
+
+
+def build_svg(art: list[str], title: str, avatar: str | None, *,
               font_size: float, pad: float, bar_h: float, line_gap: float,
               bg: str, bar: str, fg: str, title_fg: str,
               type_start: float, type_dur: float,
@@ -181,7 +202,7 @@ def build_svg(art: list[str], title: str, avatar: Path | None, *,
                         to   {{ opacity:.92; transform: none; }} }}"""
 
     return termsvg.terminal(width=w, height=h, title=title, body=body, css=css,
-                            avatar=avatar, bar_h=bar_h, bg=bg, bar=bar,
+                            avatar_uri=avatar, bar_h=bar_h, bg=bg, bar=bar,
                             title_fg=title_fg, type_start=type_start,
                             type_dur=type_dur)
 
@@ -192,7 +213,11 @@ def main() -> None:
     p.add_argument("photo", type=Path)
     p.add_argument("-o", "--out", type=Path, default=Path("assets/portrait.svg"))
     p.add_argument("--txt", type=Path, help="also dump the raw ASCII art here")
-    p.add_argument("--avatar", type=Path, help="small image for the title bar")
+    p.add_argument("--avatar", type=Path, help="image for the title-bar badge")
+    p.add_argument("--avatar-crop", metavar="L,T,R,B",
+                   help="crop the badge out of the photo before shrinking it, "
+                        "so it frames more than a face")
+    p.add_argument("--avatar-px", type=int, default=160)
     p.add_argument("--title", default="simone764@github: ~$ ./portrait.sh")
     p.add_argument("--cols", type=int, default=100)
     p.add_argument("--font-size", type=float, default=7.0)
@@ -231,8 +256,9 @@ def main() -> None:
         a.txt.parent.mkdir(parents=True, exist_ok=True)
         a.txt.write_text("\n".join(art) + "\n")
 
+    badge = avatar_uri(a.avatar, a.avatar_crop, a.avatar_px) if a.avatar else None
     svg = build_svg(
-        art, a.title, a.avatar,
+        art, a.title, badge,
         font_size=a.font_size, pad=a.pad, bar_h=a.bar_h, line_gap=a.line_gap,
         bg=a.bg, bar=a.bar, fg=a.fg, title_fg=a.title_fg,
         type_start=a.type_start, type_dur=a.type_dur,

@@ -3,10 +3,10 @@
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td valign="middle" align="center">
-      <img src="assets/portrait.svg" alt="simone764@github: ~$ ./portrait.sh" width="400">
+      <img src="assets/portrait.svg" alt="simone764@github: ~$ ./portrait.sh" width="450">
     </td>
     <td valign="middle" align="center">
-      <img src="assets/wordmark.svg" alt="SIMONE" width="490">
+      <img src="assets/wordmark.svg" alt="SIMONE" width="440">
     </td>
   </tr>
   <tr>
