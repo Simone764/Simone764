@@ -53,13 +53,15 @@ def terminal(*, width: float, height: float, title: str, body: str,
 
     av_def = av_use = ""
     if avatar:
-        a = bar_h * 0.72
-        ax, ay = round(w - a - 12, 2), round((bar_h - a) / 2, 2)
+        # a rounded square rather than a circle, and "meet" rather than "slice":
+        # the whole photo has to fit, and a circle would eat its corners
+        a = bar_h * 0.76
+        ax, ay = round(w - a - 11, 2), round((bar_h - a) / 2, 2)
         uri = data_uri(avatar)
-        av_def = (f'<clipPath id="av"><circle cx="{round(ax + a / 2, 2)}" '
-                  f'cy="{round(ay + a / 2, 2)}" r="{round(a / 2, 2)}"/></clipPath>')
+        av_def = (f'<clipPath id="av"><rect x="{ax}" y="{ay}" width="{a}" '
+                  f'height="{a}" rx="{round(a * 0.3, 2)}"/></clipPath>')
         av_use = (f'<image href="{uri}" xlink:href="{uri}" x="{ax}" y="{ay}" '
-                  f'width="{a}" height="{a}" preserveAspectRatio="xMidYMid slice" '
+                  f'width="{a}" height="{a}" preserveAspectRatio="xMidYMid meet" '
                   f'clip-path="url(#av)"/>')
 
     return f'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{w}" height="{h}" viewBox="0 0 {w} {h}" font-family="{FONT_STACK}">
