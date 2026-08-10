@@ -35,6 +35,11 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Strip the vendor watermark
+        # Each fresh download stamps "gitskins.com" back into the corner, so
+        # this has to run on every refresh, not once by hand.
+        run: python3 tools/strip_watermark.py assets/gs-portrait.svg assets/gs-wordmark.svg assets/gs-heatmap.svg
+
       - name: Recompose the Terminal Identity window
         run: python3 tools/build_identity.py -o assets/identity.svg
 

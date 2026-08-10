@@ -23,6 +23,8 @@ import argparse
 import re
 from pathlib import Path
 
+from strip_watermark import strip as strip_watermark
+
 SANS = ("-apple-system,BlinkMacSystemFont,Segoe UI,Inter,Helvetica Neue,"
         "Arial,sans-serif")
 
@@ -47,6 +49,9 @@ def read_panel(path: Path, prefix: str) -> tuple[str, str, float, float]:
     src = path.read_text()
     src = re.sub(r"<\?xml.*?\?>", "", src, flags=re.S)
     src = re.sub(r"<!--.*?-->", "", src, flags=re.S)
+    # a freshly downloaded panel still carries the vendor watermark; strip it
+    # here too so the composed window is clean even if the panels are not
+    src = strip_watermark(src)
 
     open_tag = ROOT.search(src)
     if not open_tag:

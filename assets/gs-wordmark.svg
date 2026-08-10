@@ -38,5 +38,5 @@
     <set attributeName="opacity" to="0.9" begin="0.2s"/>
     <set attributeName="opacity" to="0" begin="2.4s" fill="freeze"/>
   </rect>
-  <text x="1026" y="305" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" letter-spacing="0.3" fill="#8b949e" fill-opacity="0.42">gitskins.com</text>
+  
 </svg>
