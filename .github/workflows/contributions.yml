@@ -20,6 +20,11 @@ jobs:
           python-version: "3.12"
 
       - name: Redraw assets/contributions.svg
+        # A personal access token (read:user) makes the count include private
+        # repositories. Without the secret the build falls back to scraping the
+        # public profile, which only ever sees public contributions.
+        env:
+          GH_TOKEN: ${{ secrets.CONTRIBUTIONS_TOKEN }}
         run: python3 tools/build_contributions.py "${{ github.repository_owner }}"
 
       - name: Commit if changed

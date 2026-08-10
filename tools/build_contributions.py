@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 """Build an animated contribution-graph SVG for the profile README.
 
-Reads the calendar straight off the public profile page — no token, no API
-quota — and paints it as a terminal running ./contributions.sh: the prompt
-types itself, then the squares light up in a left-to-right wave.
+Paints the calendar as a terminal running ./contributions.sh: the prompt types
+itself, then the squares light up in a left-to-right wave.
+
+Two ways in. With a token (--token, or GH_TOKEN / GITHUB_TOKEN in the
+environment) it asks the GraphQL API, which counts contributions to private
+repositories — those are most of them for most people. Without one it scrapes
+the public profile page, which shows an anonymous visitor's view: public
+contributions only, unless "Include private contributions on my profile" is
+switched on in GitHub's profile settings.
 
 Usage:
     python3 tools/build_contributions.py Simone764 -o assets/contributions.svg
@@ -13,14 +19,36 @@ from __future__ import annotations
 
 import argparse
 import html
+import json
+import os
 import re
 import ssl
+import urllib.error
 import urllib.request
 from pathlib import Path
 
 import termsvg
 
 SOURCE = "https://github.com/users/{user}/contributions"
+GRAPHQL = "https://api.github.com/graphql"
+
+QUERY = """
+query($login: String!) {
+  user(login: $login) {
+    contributionsCollection {
+      contributionCalendar {
+        totalContributions
+        weeks {
+          contributionDays { date weekday contributionCount contributionLevel }
+        }
+      }
+    }
+  }
+}
+"""
+
+LEVELS = {"NONE": 0, "FIRST_QUARTILE": 1, "SECOND_QUARTILE": 2,
+          "THIRD_QUARTILE": 3, "FOURTH_QUARTILE": 4}
 
 CELL = re.compile(
     r'<td[^>]*?data-date="(?P<date>\d{4}-\d\d-\d\d)"[^>]*?'
@@ -52,6 +80,33 @@ def fetch(user: str) -> str:
                  "X-Requested-With": "XMLHttpRequest"})
     with urllib.request.urlopen(req, timeout=30, context=ssl_context()) as r:
         return r.read().decode("utf-8", "replace")
+
+
+def fetch_api(user: str, token: str) -> tuple[list[tuple[int, int, str, int, int]], int]:
+    """Same shape as parse(), but counting private contributions too."""
+    payload = json.dumps({"query": QUERY, "variables": {"login": user}}).encode()
+    req = urllib.request.Request(GRAPHQL, data=payload, headers={
+        "Authorization": f"bearer {token}",
+        "Content-Type": "application/json",
+        "User-Agent": "profile-readme-builder"})
+    try:
+        with urllib.request.urlopen(req, timeout=30, context=ssl_context()) as r:
+            doc = json.load(r)
+    except urllib.error.HTTPError as e:
+        raise SystemExit(f"GraphQL request failed: {e.code} {e.reason}") from e
+
+    if doc.get("errors"):
+        raise SystemExit(f"GraphQL: {doc['errors'][0].get('message')}")
+    user_node = doc["data"]["user"]
+    if user_node is None:
+        raise SystemExit(f"no such user: {user}")
+
+    cal = user_node["contributionsCollection"]["contributionCalendar"]
+    days = [(day["weekday"], col, day["date"], LEVELS[day["contributionLevel"]],
+             day["contributionCount"])
+            for col, week in enumerate(cal["weeks"])
+            for day in week["contributionDays"]]
+    return days, cal["totalContributions"]
 
 
 def parse(page: str) -> tuple[list[tuple[int, int, str, int, int]], int]:
@@ -125,6 +180,9 @@ def main() -> None:
     p.add_argument("-o", "--out", type=Path,
                    default=Path("assets/contributions.svg"))
     p.add_argument("--title")
+    p.add_argument("--token",
+                   help="GitHub token; also read from GH_TOKEN / GITHUB_TOKEN. "
+                        "Needed to count private contributions")
     p.add_argument("--html", type=Path,
                    help="read a saved contributions page instead of fetching")
     p.add_argument("--palette", choices=sorted(PALETTES), default="green")
@@ -138,8 +196,13 @@ def main() -> None:
     p.add_argument("--cell-dur", type=float, default=0.45)
     a = p.parse_args()
 
-    page = a.html.read_text() if a.html else fetch(a.user)
-    days, total = parse(page)
+    token = a.token or os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    if a.html:
+        days, total = parse(a.html.read_text())
+    elif token:
+        days, total = fetch_api(a.user, token)
+    else:
+        days, total = parse(fetch(a.user))
     title = a.title or f"{a.user.lower()}@github: ~$ ./contributions.sh"
 
     svg = build_svg(days, total, a.user, title=title,
@@ -149,7 +212,8 @@ def main() -> None:
                     cell_dur=a.cell_dur)
     a.out.parent.mkdir(parents=True, exist_ok=True)
     a.out.write_text(svg)
-    print(f"{a.out}  {len(days)} days, {total} contributions  "
+    source = "saved page" if a.html else ("GraphQL API" if token else "public page")
+    print(f"{a.out}  {len(days)} days, {total} contributions via {source}  "
           f"{a.out.stat().st_size / 1024:.1f} KB")
 
 
