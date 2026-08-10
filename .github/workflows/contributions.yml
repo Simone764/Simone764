@@ -1,7 +1,8 @@
-name: refresh contribution graph
+name: refresh panels
 
-# The portrait and the wordmark never change; the calendar does, so redraw it
-# daily from the public profile page and commit it only when it actually moved.
+# The panels in the README are snapshots of the gitskins endpoints, so the
+# heatmap would otherwise freeze on the day it was downloaded. Re-fetch daily
+# and commit only what actually changed.
 on:
   schedule:
     - cron: "17 4 * * *"
@@ -10,30 +11,33 @@ on:
 permissions:
   contents: write
 
+env:
+  QUERY: "theme=github-dark&v=sync-intro-4&style=terminal&mode=dark"
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
 
-      - name: Redraw assets/contributions.svg
-        # A personal access token (read:user) makes the count include private
-        # repositories. Without the secret the build falls back to scraping the
-        # public profile, which only ever sees public contributions.
-        env:
-          GH_TOKEN: ${{ secrets.CONTRIBUTIONS_TOKEN }}
-        run: python3 tools/build_contributions.py "${{ github.repository_owner }}"
+      - name: Re-fetch the panels
+        # The endpoints sit behind a one-hour CDN cache that can hand back a
+        # stale calendar — it served 3 contributions when the real count was
+        # 136 — so every request carries a cache-busting parameter.
+        run: |
+          for section in portrait wordmark heatmap; do
+            curl -sSfL --retry 3 --retry-delay 5 \
+              "https://www.gitskins.com/api/section/$section?username=${{ github.repository_owner }}&$QUERY&cb=$(date +%s)" \
+              -o "assets/gs-$section.svg"
+          done
 
       - name: Commit if changed
         run: |
-          if git diff --quiet -- assets/contributions.svg; then
-            echo "calendar unchanged"
+          if git diff --quiet -- assets; then
+            echo "panels unchanged"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore: refresh contribution graph" -- assets/contributions.svg
+          git commit -m "chore: refresh profile panels" -- assets
           git push
