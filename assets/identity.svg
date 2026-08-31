@@ -1910,6 +1910,11 @@
     <animate attributeName="fill-opacity" values="0;0.07;0.07" keyTimes="0;0.55;1" begin="2.290s" dur="0.180s" fill="freeze" calcMode="spline" keySplines="0.2 0.8 0.2 1;0.4 0 0.2 1"/>
     <animateTransform attributeName="transform" type="scale" values="0.15;1.12;1" keyTimes="0;0.55;1" begin="2.290s" dur="0.180s" fill="freeze" calcMode="spline" keySplines="0.2 0.8 0.2 1;0.4 0 0.2 1"/>
   </rect>
+</g><g transform="translate(761.5,115.5)">
+  <rect x="-5.5" y="-5.5" width="11" height="11" rx="2.5" fill="#ffffff" fill-opacity="0" transform="scale(0.15)">
+    <animate attributeName="fill-opacity" values="0;0.07;0.07" keyTimes="0;0.55;1" begin="2.300s" dur="0.180s" fill="freeze" calcMode="spline" keySplines="0.2 0.8 0.2 1;0.4 0 0.2 1"/>
+    <animateTransform attributeName="transform" type="scale" values="0.15;1.12;1" keyTimes="0;0.55;1" begin="2.300s" dur="0.180s" fill="freeze" calcMode="spline" keySplines="0.2 0.8 0.2 1;0.4 0 0.2 1"/>
+  </rect>
 </g><rect x="28" y="94" width="2.5" height="99" fill="#58a6ff" opacity="0">
   <animate attributeName="x" from="28" to="767" begin="0.2s" dur="2.1999999999999997s" fill="freeze"/>
   <set attributeName="opacity" to="0.55" begin="0.2s"/>
